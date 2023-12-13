@@ -1,0 +1,4 @@
+operations.processing:
+  sleepMilliSeconds: 1000
+  maxCountOperations: 100_000
+
