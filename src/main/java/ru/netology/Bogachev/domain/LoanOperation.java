@@ -1,10 +1,8 @@
 package ru.netology.Bogachev.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -13,14 +11,6 @@ public class LoanOperation extends Operation implements ConsolePrintable{
 
     public LoanOperation(int id, int loanId, int sum, String currency, String merchant, int customerId) {
         super(id, sum, currency, merchant, customerId);
-        this.loanId = loanId;
-    }
-
-    public int getLoanId() {
-        return loanId;
-    }
-
-    public void setLoanId(int loanId) {
         this.loanId = loanId;
     }
 
@@ -44,15 +34,5 @@ public class LoanOperation extends Operation implements ConsolePrintable{
                 ", merchant='" + merchant + '\'' +
                 ", loanId=" + loanId +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.sum * 1337+this.merchant.hashCode()*1337;
     }
 }

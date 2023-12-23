@@ -33,8 +33,10 @@ public class CustomerController {
         return new CustomerDTO(customer.getId(), customer.getName());
     }
     @PostMapping
-    public void setCustomer(Customer customer){
-        customerService.setElement(customer);
-        System.out.println("Successful!");
+    public boolean setCustomer(Customer customer){
+        if (customerService.setElement(customer).equals("add new Customer")){
+            return true;
+        }
+        return false;
     }
 }

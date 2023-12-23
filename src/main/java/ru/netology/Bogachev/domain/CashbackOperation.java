@@ -1,13 +1,11 @@
 package ru.netology.Bogachev.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 public class CashbackOperation extends Operation implements ConsolePrintable{
     private int cashbackAmount;
 

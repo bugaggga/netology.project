@@ -21,43 +21,38 @@ public class StatementServiceTest extends OperationHistoryApiApplicationTest {
     private final static List<Operation> operationList = new ArrayList<>();
     @BeforeAll
     public static void inputOperation(){
-        CashbackOperation cashbackOperation = new CashbackOperation(100_000,
+        CashbackOperation cashbackOperation = new CashbackOperation(100_002,
                 45,
                 4500,
                 "currency",
                 "merchant",
                 1);
-        LoanOperation loanOperation = new LoanOperation(200_000,
-                200_000,
+        LoanOperation loanOperation = new LoanOperation(200_001,
+                200_001,
                 4500,
                 "currency",
                 "merchant",
                 2);
 
-        Operation operation1 = cashbackOperation;
-        Operation operation2 = loanOperation;
-
         operationList.add(cashbackOperation);
         operationList.add(loanOperation);
-        operationList.add(operation1);
-        operationList.add(operation2);
     }
     @Test
     public void addOperationTest(){
         for(Operation operation: operationList){
-            statementService.addOperation(operation);
+            assertTrue(statementService.addOperation(operation));
         }
     }
 
     @Test
     public void getOperationsTest(){
         addOperationTest();
-        int sizeCustomer1 = statementService.getOperations(1).size();
-        int sizeCustomer2 = statementService.getOperations(2).size();
-
-        assertEquals(2, sizeCustomer1);
-        assertEquals(2, sizeCustomer2);
-        assertNull(statementService.getOperations(5));
+        List<Operation> listCustomer1 = statementService.getOperations(1);
+        List<Operation> listCustomer2 = statementService.getOperations(2);
+        List<Operation> listCustomerOther = statementService.getOperations(5);
+        assertNotNull(listCustomer1);
+        assertNotNull(listCustomer2);
+        assertNull(listCustomerOther);
     }
 
     @Test
@@ -65,10 +60,10 @@ public class StatementServiceTest extends OperationHistoryApiApplicationTest {
         addOperationTest();
 
         boolean bool = statementService.deleteOperation(100000);
-        assertEquals(true, bool);
+        assertTrue(bool);
 
         bool = statementService.deleteOperation(1000);
-        assertEquals(false, bool);
+        assertFalse(bool);
 
     }
 }

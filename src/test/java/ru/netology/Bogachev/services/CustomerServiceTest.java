@@ -9,8 +9,7 @@ import ru.netology.Bogachev.domain.Customer;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerServiceTest extends OperationHistoryApiApplicationTest {
     @Autowired
@@ -41,18 +40,16 @@ public class CustomerServiceTest extends OperationHistoryApiApplicationTest {
 
     @Test
     public void setCustomerTest(){
-        int sizeStorageBeforeSet = customerService.getCustomers().size();
-        customerService.setElement(new Customer(5, "Client 5"));
-        sizeStorageBeforeSet+=1;
-        assertEquals(customerService.getCustomers().size(), sizeStorageBeforeSet);
-
-        customerService.setElement(new Customer(2, "Client 2 new"));
-        assertEquals(customerService.getCustomers().size(), sizeStorageBeforeSet);
+        assertEquals("add new Customer", customerService.setElement(new Customer(5, "Client 5")));
+        assertEquals("replace old Customer", customerService.setElement(new Customer(2, "Client 2 new")));
 
         int index = customerService.getCustomers().indexOf(new Customer(2, "Client 2 new"));
-        assertEquals(customerService.getCustomers().get(index).getName(), "Client 2 new");
+        assertEquals("Client 2 new", customerService.getCustomers().get(index).getName());
 
         index = customerService.getCustomers().indexOf(new Customer(5, "Client 5"));
-        assertEquals(customerService.getCustomers().get(index).getName(), "Client 5");
+        assertEquals("Client 5", customerService.getCustomers().get(index).getName());
+
+        assertEquals("replace old Customer", customerService.setElement(new Customer(2, "Boot")));
+        customerService.getCustomers().remove(customerService.getCustomers().indexOf(new Customer(5, "Client 5")));
     }
 }

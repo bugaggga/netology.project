@@ -8,7 +8,6 @@ import ru.netology.Bogachev.domain.Operation;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
 @RequiredArgsConstructor
 @Component
 public class AsyncInputOperationService {

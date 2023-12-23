@@ -8,7 +8,7 @@ import ru.netology.Bogachev.controller.dto.CustomerDTO;
 import ru.netology.Bogachev.controller.dto.CustomersGetResponse;
 import ru.netology.Bogachev.domain.Customer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerControllerTest extends OperationHistoryApiApplicationTest {
     @Autowired
@@ -27,14 +27,14 @@ public class CustomerControllerTest extends OperationHistoryApiApplicationTest {
         assertEquals(2, customer2.getId());
         assertEquals("Boot", customer2.getName());
     }
-
     @Test
     public void aggGetClientTest(){
         for (Customer customer: customerService.getCustomers()){
             getClientTest(customer);
         }
     }
-    private void getClientTest(Customer customer){
+
+    public void getClientTest(Customer customer){
         CustomerDTO customerDTO = customerController.getCustomer(customer.getId());
 
         assertEquals(customer.getId(), customerDTO.getId());
@@ -43,18 +43,16 @@ public class CustomerControllerTest extends OperationHistoryApiApplicationTest {
 
     @Test
     public void setClientTest(){
-        int sizeStorageBeforeSet = customerController.getCustomers().getCustomers().size();
-        customerController.setCustomer(new Customer(5, "Client 5"));
-        sizeStorageBeforeSet+=1;
-        assertEquals(customerController.getCustomers().getCustomers().size(), sizeStorageBeforeSet);
-
-        customerController.setCustomer(new Customer(2, "Client 2 new"));
-        assertEquals(customerController.getCustomers().getCustomers().size(), sizeStorageBeforeSet);
+        assertTrue(customerController.setCustomer(new Customer(5, "Client 5")));
+        assertFalse(customerController.setCustomer(new Customer(2, "Client 2 new")));
 
         int index = customerService.getCustomers().indexOf(new Customer(2, "Client 2 new"));
-        assertEquals(customerService.getCustomers().get(index).getName(), "Client 2 new");
+        assertEquals("Client 2 new", customerService.getCustomers().get(index).getName());
 
         index = customerService.getCustomers().indexOf(new Customer(5, "Client 5"));
-        assertEquals(customerService.getCustomers().get(index).getName(), "Client 5");
+        assertEquals("Client 5", customerService.getCustomers().get(index).getName());
+
+        assertFalse(customerController.setCustomer(new Customer(2, "Boot")));
+        customerService.getCustomers().remove(customerService.getCustomers().indexOf(new Customer(5, "Client 5")));
     }
 }

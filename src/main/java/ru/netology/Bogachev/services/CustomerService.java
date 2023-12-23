@@ -11,14 +11,15 @@ import java.util.List;
 @Component
 public class CustomerService {
     private final List<Customer> customers = new ArrayList<>();
-    public void setElement(Customer element) {
+    public String setElement(Customer element) {
         Customer customer = getElement(element.getId());
         if (customer != null){
             int index = customers.indexOf(customer);
             customers.get(index).setName(element.getName());
-            return;
+            return "replace old Customer";
         }
         customers.add(element);
+        return "add new Customer";
     }
 
     public Customer getElement(int id) {

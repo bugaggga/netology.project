@@ -8,9 +8,12 @@ import ru.netology.Bogachev.controller.dto.OperationDTOInput;
 import ru.netology.Bogachev.domain.CashbackOperation;
 import ru.netology.Bogachev.domain.LoanOperation;
 import ru.netology.Bogachev.domain.Operation;
+import org.assertj.core.api.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AsyncInputOperationServiceTest extends OperationHistoryApiApplicationTest {
     @Autowired
@@ -42,14 +45,20 @@ public class AsyncInputOperationServiceTest extends OperationHistoryApiApplicati
         operationInputs.add(operation);
     }
     @Test
-    public void startProcessingTest(){
-        asyncInputOperationService.startAsyncOperationProcessing();
+    public void startAsyncInputOperations(){
+        boolean thrown = false;
+        try{
+            asyncInputOperationService.startAsyncOperationProcessing();
+        }
+        catch (Exception e){
+            thrown = true;
+        }
+        assertFalse(thrown);
     }
-
     @Test
     public void offerOperationTest(){
         for(Operation operation: operationInputs){
-            asyncInputOperationService.offerOperation(operation);
+            assertTrue(asyncInputOperationService.offerOperation(operation));
         }
     }
 }

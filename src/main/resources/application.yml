@@ -1,4 +1,4 @@
 operations.processing:
-  sleepMilliSeconds: 1000
+  sleepMilliSeconds: 100
   maxCountOperations: 100_000
 

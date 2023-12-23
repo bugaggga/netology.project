@@ -1,5 +1,6 @@
 package ru.netology.Bogachev.services;
 
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class OperationControllerTest extends OperationHistoryApiApplicationTest {
     @Autowired
     private OperationController operationController;
@@ -53,20 +56,20 @@ public class OperationControllerTest extends OperationHistoryApiApplicationTest 
     @Test
     public void getOperationsTest(){
         assertEquals(statementService.getOperations(1).size(), operationController.getOperations(1).getOperations().size());
+        assertEquals(statementService.getOperations(2).size(), operationController.getOperations(2).getOperations().size());
         assertNull(operationController.getOperations(5));
     }
     @Test
     public void setOperationTest(){
         for(OperationDTOInput operation: operationDTOInputs){
-            operationController.setOperation(operation);
+            assertTrue(operationController.setOperation(operation));
         }
     }
 
     @Test
     public void deleteOperationTest(){
-        setOperationTest();
-
-        operationController.deleteOperation(100_000);
-        operationController.deleteOperation(200_000);
+        assertTrue(operationController.deleteOperation(100_000));
+        assertTrue(operationController.deleteOperation(200_000));
+        assertFalse(operationController.deleteOperation(20_000));
     }
 }
